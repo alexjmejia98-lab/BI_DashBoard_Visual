@@ -22,7 +22,7 @@ df["Order Date"] = pd.to_datetime(df["Order Date"], format="%d/%m/%Y")
 df["Ship Date"]  = pd.to_datetime(df["Ship Date"],  format="%d/%m/%Y")
 
 # =====================================================================
-# 2. Feature engineering
+# 2. Data Enhancement
 # =====================================================================
 # Shipping time
 df["Shipping Days"] = (df["Ship Date"] - df["Order Date"]).dt.days
@@ -42,7 +42,7 @@ df["Weekday"] = pd.Categorical(df["Order Date"].dt.day_name(),
                                categories=weekday_order, ordered=True)
 
 # =====================================================================
-# 3. KPI helpers and order-level table
+# 3. KPI definition
 # =====================================================================
 def kpis(data, by):
     out = data.groupby(by, observed=True).agg(
@@ -109,8 +109,7 @@ num   = lambda v: f"{v:,.0f}"
 days  = lambda v: f"{v:.1f} d"
 money_axis = mticker.FuncFormatter(lambda x, _: f"${x/1e3:,.0f}K")
 
-# ---- Colour palettes: one per row, shifting gradually around the colour wheel
-#      indigo -> blue -> blue-teal -> teal -> sea green, plus one shared accent
+# ---- Colour palettes
 ROW_PALETTES = {
     0: dict(dark="#252e5c", main="#3a4a8c", mid="#5b6db0", light="#9eaad6", pale="#e3e7f5"),  # indigo
     1: dict(dark="#1d3557", main="#2a6f97", mid="#4a90b8", light="#8fc1dc", pale="#d4e8f2"),  # blue
